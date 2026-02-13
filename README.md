@@ -37,7 +37,11 @@
 - Presigned URL با مدت اعتبار مشخص
 - جداسازی Domain Errors از Infra Errors
 ---
-## 🛠 نصب و راه‌اندازی
+## 🧩 راه‌اندازی docker
+```bash
+docker compose up -d
+```
+## 🛠️ نصب
 ```bash
 go get github.com/Skryldev/filestore
 go get github.com/minio/minio-go/v7
@@ -247,7 +251,7 @@ c.JSON(201, info)
 - اضافه کردن OpenTelemetry tracing
 - پیاده‌سازی Rate limiting در adaptor
 ## 📌 جمع‌بندی
-##### Filestore یک ماژول:
+##### ماژول Filestore:
 - 🧱 مستقل از فریم‌ورک
 - 🧩 قابل جایگزینی
 - 🚀 آماده استفاده در Production
