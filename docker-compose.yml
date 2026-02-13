@@ -1,0 +1,44 @@
+services:
+  minio:
+    image: minio/minio:latest
+    restart: always
+
+    command: server /data --console-address ":9001"
+
+    ports:
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # Web Console
+
+    environment:
+      MINIO_ROOT_USER: "admin"
+      MINIO_ROOT_PASSWORD: "StrongSuperSecurePassword123!"
+
+      # Security / Production tuning
+      MINIO_BROWSER_REDIRECT_URL: "http://localhost:9001"
+      MINIO_SERVER_URL: "http://localhost:9000"
+
+    volumes:
+      - minio_data:/data
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+    networks:
+      - minio_network
+
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1G
+
+volumes:
+  minio_data:
+    driver: local
+
+networks:
+  minio_network:
+    driver: bridge
